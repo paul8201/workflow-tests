@@ -21,7 +21,7 @@ jobs:
         PR_TITLE="Sync with Upstream"
         PR_BODY="This pull request updates the fork to match the latest changes from the upstream repository."
         GIT_BRANCH=main
-        gh pr create --base "$GIT_BRANCH" --fill --head sync --title "$PR_TITLE" --body "$PR_BODY"
+        gh pr create --base paul8201:main --fill --head sync --title "title" --body "bodY"
       env:
        GITHUB_TOKEN: ${{ secrets.CODEFLARE_MACHINE_ACCOUNT_TOKEN }}
       shell: bash
