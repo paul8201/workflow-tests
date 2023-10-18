@@ -20,9 +20,9 @@ jobs:
         run: |
           git remote add upstream https://github.com/mike9014/workflow-tests.git
           git fetch upstream
-          git checkout -b sync-branch
+          git checkout -b sync-branchs
           git merge upstream/main
-          git push origin sync-branch
+          git push origin sync-branchs
 
       - name: Create Pull Request
         run: |
