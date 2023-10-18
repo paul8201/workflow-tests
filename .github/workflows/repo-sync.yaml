@@ -19,7 +19,9 @@ jobs:
       run: |
         git config --global user.name ${{ secrets.githubUserName }}
         git config --global user.email ${{ secrets.githubEmail }}
-      
+    - name: Ensure Sync Branch Exists
+      run: git checkout -b sync origin/sync
+  
     - name: Create Pull Request
       run: |
         PR_TITLE="Sync with Upstream"
