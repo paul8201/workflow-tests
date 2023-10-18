@@ -1,0 +1,18 @@
+# This workflow will build the CodeFlare Operator image and push it to the opendatahub image registry as well as update versions in the MakeFile and README
+
+name: Build and Push
+
+on:
+  pull_request:
+    types:
+      - closed
+  workflow_dispatch:
+
+jobs:
+  pr-cleanup:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && ${{ github.event.pull_request.base.ref == 'sync-cfo-fork' && github.event.pull_request.merged == true }}
+    steps:
+      - name: Delete Remote branch
+        run: |
+          git push origin --delete sync-cfo-fork
