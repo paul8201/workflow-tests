@@ -17,7 +17,7 @@ jobs:
       with:
         source_repo: "https://github.com/mike9014/workflow-tests.git"
         source_branch: ${{ env.GIT_BRANCH }}
-        destination_branch: "sync"
+        destination_branch: "sync-cfo-repo"
         github_token: ${{ secrets.CODEFLARE_MACHINE_ACCOUNT_TOKEN }}
     - name: Set up Git
       run: |
