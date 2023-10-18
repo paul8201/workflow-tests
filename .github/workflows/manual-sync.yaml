@@ -20,6 +20,7 @@ jobs:
         run: |
           # Replace 'upstream' with the name of the upstream repository
           git remote add upstream https://github.com/mike9014/workflow-tests.git
+          git remote -v
           git fetch upstream
 
       - name: Create Sync Branch
