@@ -33,9 +33,9 @@ jobs:
           # Replace with your desired title and body for the pull request
           PR_TITLE="Sync with Upstream"
           PR_BODY="This pull request updates the fork to match the latest changes from the upstream repository."
-
+          GIT_BRANCH=${GITHUB_REF#refs/heads/}
           # Create the pull request
-          gh pr create --base main --head sync-branch --title "$PR_TITLE" --body "$PR_BODY"
+          gh pr create --base "$GIT_BRANCH" --fill --head sync-branch --title "$PR_TITLE" --body "$PR_BODY"
         env:
          GITHUB_TOKEN: ${{ secrets.CODEFLARE_MACHINE_ACCOUNT_TOKEN }}
         shell: bash
