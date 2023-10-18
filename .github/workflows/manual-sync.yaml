@@ -16,15 +16,11 @@ jobs:
           git config --global user.name ${{ secrets.githubUserName }}
           git config --global user.email ${{ secrets.githubEmail }}
 
-      - name: Fetch Upstream
+      - name: Merge main branch
         run: |
           # Replace 'upstream' with the name of the upstream repository
           git remote add upstream https://github.com/mike9014/workflow-tests.git
           git fetch upstream
-
-      - name: Merge main branch
-        run: |
-          # Create a new branch for the sync
           git checkout -b sync-branch
           git merge upstream/main
           git push origin sync-branch
