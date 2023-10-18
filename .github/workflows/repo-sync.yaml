@@ -13,5 +13,5 @@ jobs:
       with:
         source_repo: "https://github.com/mike9014/workflow-tests.git"
         source_branch: "main"
-        destination_branch: "main"
+        destination_branch: "sync"
         github_token: ${{ secrets.CODEFLARE_MACHINE_ACCOUNT_TOKEN }}
