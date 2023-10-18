@@ -21,7 +21,7 @@ jobs:
           git checkout -b sync-branchs
           git remote add fork https://github.com/mike9014/workflow-tests.git
           git fetch fork
-          git merge fork/main
+          git rebase fork/main
           git push origin sync-branchs
 
       - name: Create Pull Request
