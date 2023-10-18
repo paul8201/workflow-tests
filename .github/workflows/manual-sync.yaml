@@ -18,10 +18,10 @@ jobs:
 
       - name: Merge main branch
         run: |
-          git remote add upstream https://github.com/mike9014/workflow-tests.git
-          git fetch upstream
           git checkout -b sync-branchs
-          git merge upstream/main
+          git remote add fork https://github.com/mike9014/workflow-tests.git
+          git fetch fork
+          git merge fork/main
           git push origin sync-branchs
 
       - name: Create Pull Request
