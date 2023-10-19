@@ -9,7 +9,7 @@ on:
 
 jobs:
   pr_merged_by_bob_with_sync_title:
-    if: (github.event.pull_request.merged == true && github.event.pull_request.user.login == '${{ secrets.githubUserName }}' && contains(github.event.pull_request.title, 'Sync with Upstream')) || github.event_name == 'workflow_dispatch'
+    if: (github.event.pull_request.merged == true && github.event.pull_request.user.login == ${{ secrets.githubUserName }} && contains(github.event.pull_request.title, 'Sync with Upstream')) || github.event_name == 'workflow_dispatch'
 
     runs-on: ubuntu-latest
 
