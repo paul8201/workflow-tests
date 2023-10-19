@@ -38,7 +38,7 @@ jobs:
 
         author: "${{ secrets.githubUserName }} <${{ secrets.githubEmail }}>"
         branch: sync-cfo-fork
-        delete-branch: true
+        delete-branch: false
         body: >
           _This pull request was auto-generated_
 
