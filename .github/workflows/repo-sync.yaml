@@ -1,13 +1,17 @@
+# This workflow will create a sync pr for the opendatahub-io/codeflare-operator fork with project-codeflare/codeflare-operator
+
+name: Create Sync Fork PR
+
 on:
   workflow_dispatch:
 
 jobs:
-  repo-sync:
+  create-fork-sync-pr:
     runs-on: ubuntu-latest
-    
+
     env:
       GIT_BRANCH: ${GITHUB_REF#refs/heads/}
-    
+
     steps:
     - uses: actions/checkout@v3
       with:
@@ -15,21 +19,34 @@ jobs:
     - name: repo-sync
       uses: repo-sync/github-sync@v2
       with:
-        source_repo: "https://github.com/mike9014/workflow-tests.git"
+         source_repo: "https://github.com/mike9014/workflow-tests.git"
         source_branch: ${{ env.GIT_BRANCH }}
-        destination_branch: "sync-cfo-repo"
+        destination_branch: "sync-cfo-fork"
         github_token: ${{ secrets.CODEFLARE_MACHINE_ACCOUNT_TOKEN }}
+
     - name: Set up Git
       run: |
         git config --global user.name ${{ secrets.githubUserName }}
         git config --global user.email ${{ secrets.githubEmail }}
-  
-    - name: Create Pull Request
-      run: |
-        PR_TITLE="Sync with Upstream"
-        PR_BODY="This pull request updates the fork to match the latest changes from the upstream repository."
-        gh pr create --base ${{ env.GIT_BRANCH }} --head sync-cfo-repo --title "Sync with Upstream" --body "This pull request updates the fork to match the latest changes from the upstream repository."
-      env:
-       GITHUB_TOKEN: ${{ secrets.CODEFLARE_MACHINE_ACCOUNT_TOKEN }}
-      shell: bash
-        
+
+    - uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # v5
+      with:
+        title: "Sync CodeFlare Operator fork"
+        token: "${{ secrets.CODEFLARE_MACHINE_ACCOUNT_TOKEN }}"
+        commit-message: >
+          Synced the Opendatahub-io CodeFlare Operator fork
+
+        author: "${{ secrets.githubUserName }} <${{ secrets.githubEmail }}>"
+        branch: sync-cfo-fork
+        delete-branch: true
+        body: >
+          _This pull request was auto-generated_
+
+          This PR syncs the Opendatahub-io CodeFlare Operator with the Project-CodeFlare CodeFlare Operator.
+
+          ## Actions:
+
+              1. Review changes on the repo  and validate if it is correct.
+              2. Perform manual changes if required to the `sync-cfo-fork` branch.
+              3. Merge this pull request.
+
