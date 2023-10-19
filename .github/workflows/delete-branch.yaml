@@ -1,7 +1,6 @@
 # This workflow will build the CodeFlare Operator image and push it to the opendatahub image registry as well as update versions in the MakeFile and README
 
-name: Build and Push
-
+name: POST PR MERGE
 on:
   pull_request:
     types:
@@ -9,11 +8,17 @@ on:
   workflow_dispatch:
 
 jobs:
-  pr-cleanup:
+  pr_merged_by_bob_with_sync_title:
+    if: (github.event.pull_request.merged == true && github.event.pull_request.user.login == '${{ secrets.githubUserName }}' && contains(github.event.pull_request.title, 'Sync with Upstream')) || github.event_name == 'workflow_dispatch'
+
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'workflow_dispatch' }} || ${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'sync-cfo-fork' && github.event.pull_request.merged == true }}
+
     steps:
-      - uses: actions/checkout@v3
-      - name: Delete Remote branch
-        run: |
-          echo "Hi"
+    - name: Check out the code
+      uses: actions/checkout@v2
+
+    - name: Notify or perform actions
+      run: |
+        # You can put your notification or action steps here
+        echo "PR by Bob with 'sync' title has been merged or workflow manually triggered."
+
