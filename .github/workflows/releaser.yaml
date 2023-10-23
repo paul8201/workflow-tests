@@ -20,4 +20,4 @@ jobs:
           # Create a release using the GitHub CLI and the random version
           gh release create ${{ steps.random-version.outputs.version }} ./path/to/artifacts/*
         env:
-          GITHUB_TOKEN: ${{ secrets.CODEFLARE_MACHINE_ACCOUNT_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
