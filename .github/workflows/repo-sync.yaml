@@ -33,5 +33,5 @@ jobs:
         PR_BODY="This pull request updates the fork to match the latest changes from the upstream repository."
         gh pr create --base "${{ env.GIT_BRANCH }}" --head sync-cfo-fork --title "$PR_TITLE" --body "$PR_BODY"
       env:
-        GITHUB_TOKEN: ${{ secrets.CODEFLARE_MACHINE_ACCOUNT_TOKEN }}
+        GITHUB_TOKEN: ${{ github.token }}
       shell: bash
