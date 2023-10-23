@@ -18,6 +18,6 @@ jobs:
       - name: Create GitHub Release
         run: |
           # Create a release using the GitHub CLI and the random version
-          gh release create ${{ steps.random-version.outputs.version }} ./path/to/artifacts/*
+          gh release create ${{ steps.random-version.outputs.version }} -R mike9014/workflow-tests
         env:
           GITHUB_TOKEN: ${{ github.TOKEN }}
