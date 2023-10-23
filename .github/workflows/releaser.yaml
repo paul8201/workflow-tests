@@ -22,4 +22,5 @@ jobs:
           # Create a release using the GitHub CLI and the random version
           gh release create ${{ steps.random-version.outputs.version }} --target ${{ github.ref }}
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.TOKEN }}
+        shell: bash
