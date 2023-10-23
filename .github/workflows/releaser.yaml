@@ -1,0 +1,23 @@
+name: Create Random Release
+
+on:
+  workflow_dispatch:
+  # This event allows manual triggering of the workflow from the GitHub Actions UI.
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Generate Random Version
+        id: random-version
+        run: echo "::set-output name=version::v$(date +'%Y%m%d%H%M%S')"
+
+      - name: Create GitHub Release
+        run: |
+          # Create a release using the GitHub CLI and the random version
+          gh release create ${{ steps.random-version.outputs.version }} ./path/to/artifacts/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.CODEFLARE_MACHINE_ACCOUNT_TOKEN }}
