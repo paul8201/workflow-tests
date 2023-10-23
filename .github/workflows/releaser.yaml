@@ -1,4 +1,4 @@
-name: Create Random Release
+name: create-release
 
 on:
   workflow_dispatch:
