@@ -2,7 +2,7 @@ name: Sync Fork with Upstream
 
 on:
   workflow_run:
-    workflows: [create-release]
+    workflows: ["create-release"]
     types:
       - completed
   workflow_dispatch:
