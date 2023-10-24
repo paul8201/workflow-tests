@@ -2,7 +2,8 @@ name: Sync Fork with Upstream
 
 on:
   release:
-    types: [published]
+    types: 
+      [published]
   workflow_dispatch:
   
 
@@ -11,9 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Sync-fork
-        env:
-          GITHUB_TOKEN: ${{ secrets.CODEFLARE_MACHINE_ACCOUNT_TOKEN }}
         run: |
           gh workflow run delete-branch.yaml -R github.com/mike9014/workflow-tests -r main
-
-          
+        env:
+          GITHUB_TOKEN: ${{ secrets.CODEFLARE_MACHINE_ACCOUNT_TOKEN }}
+        shell:
+          bash
