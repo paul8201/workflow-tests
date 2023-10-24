@@ -12,10 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Sync-fork
-        run: |
-          gh workflow run delete-branch.yaml -R github.com/mike9014/workflow-tests -r main
         env:
           GITHUB_TOKEN: ${{ secrets.CODEFLARE_MACHINE_ACCOUNT_TOKEN }}
-        shell:
-          bash
+        run: |
+          gh workflow run delete-branch.yaml -R github.com/mike9014/workflow-tests -r main
+
           
