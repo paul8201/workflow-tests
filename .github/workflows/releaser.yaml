@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Generate Random Version
         id: random-version
@@ -22,5 +22,5 @@ jobs:
           # Create a release using the GitHub CLI and the random version
           gh release create ${{ steps.random-version.outputs.version }} --target ${{ github.ref }}
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.TOKEN }}
         shell: bash
