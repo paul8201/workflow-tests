@@ -22,5 +22,5 @@ jobs:
           # Create a release using the GitHub CLI and the random version
           gh release create ${{ steps.random-version.outputs.version }} --target ${{ github.ref }} --generate-notes -R mike9014/workflow-tests
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.CODEFLARE_MACHINE_ACCOUNT_TOKEN }}
         shell: bash
