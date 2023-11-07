@@ -2,7 +2,11 @@ name: Create Sync Fork PR
 
 on:
   workflow_dispatch:
-
+    inputs:
+      version:
+        description: 'Tag to be used for operator image'
+        required: true
+        default: 'v0.0.0-dev'
 jobs:
   create-fork-sync-pr:
     runs-on: ubuntu-latest
@@ -24,12 +28,8 @@ jobs:
 
     - name: Update image
       run: |
-        release_tag=$(gh release view -R github.com/project-codeflare/codeflare-operator --json tagName | jq -r '.tagName')
         git checkout sync-cfo-fork
-        echo $release_tag
-        VERSION=$release_tag perl -i -pe 's/:(.*)$/:$ENV{"VERSION"}/' config/manifests/bases/params.env
-      env:
-        GH_TOKEN: ${{ github.token }}
+        VERSION=${{ github.event.inputs.version }} perl -i -pe 's/:(.*)$/:$ENV{"VERSION"}/' config/manifests/bases/params.env
       shell:
         bash
 
