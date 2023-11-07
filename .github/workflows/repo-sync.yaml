@@ -26,10 +26,8 @@ jobs:
       run: |
         release_tag=$(gh release view -R github.com/project-codeflare/codeflare-operator --json tagName | jq -r '.tagName')
         git checkout sync-cfo-fork
-        release=$release_tag perl -i -pe 's/:(.*)$/:$ENV{"release"}/' config/manifests/bases/params.env
-        git status
-        pwd
-        cat config/manifests/bases/params.env
+        echo $release_tag
+        release_tag=$release_tag perl -i -pe 's/:(.*)$/:$ENV{"release_tag"}/' config/manifests/bases/params.env
 
     - name: Commit changes in the code back to repository
       uses: stefanzweifel/git-auto-commit-action@v4
