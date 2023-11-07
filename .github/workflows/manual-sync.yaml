@@ -1,36 +1,20 @@
 name: Sync Fork with Upstream
 
 on:
+  release:
+    types: 
+      - published
   workflow_dispatch:
+  
 
 jobs:
-  sync:
+  sync-fork:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Check out the code
-        uses: actions/checkout@v2
-
-      - name: Set up Git
+      - name: Sync-fork
         run: |
-          git config --global user.name ${{ secrets.githubUserName }}
-          git config --global user.email ${{ secrets.githubEmail }}
-
-      - name: Merge main branch
-        run: |
-          git checkout -b sync-branchs
-          git remote add fork https://github.com/mike9014/workflow-tests.git
-          git fetch fork
-          git rebase fork/main
-          git push origin sync-branchs
-
-      - name: Create Pull Request
-        run: |
-          PR_TITLE="Sync with Upstream"
-          PR_BODY="This pull request updates the fork to match the latest changes from the upstream repository."
-          GIT_BRANCH=${GITHUB_REF#refs/heads/}
-          gh pr create --base "$GIT_BRANCH" --fill --head sync-branch --title "$PR_TITLE" --body "$PR_BODY"
+          gh workflow run delete-branch.yaml -R github.com/mike9014/workflow-tests -r main
         env:
-         GITHUB_TOKEN: ${{ secrets.CODEFLARE_MACHINE_ACCOUNT_TOKEN }}
-        shell: bash
-          
+          GITHUB_TOKEN: ${{ secrets.CODEFLARE_MACHINE_ACCOUNT_TOKEN }}
+        shell:
+          bash

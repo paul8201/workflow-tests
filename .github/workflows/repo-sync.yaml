@@ -22,6 +22,20 @@ jobs:
         destination_branch: "sync-cfo-fork"
         github_token: ${{ secrets.CODEFLARE_MACHINE_ACCOUNT_TOKEN }}
 
+    - name: Update image
+      run: |
+        release_tag=$(gh release view -R github.com/project-codeflare/codeflare-operator --json tagName | jq -r '.tagName')
+        git checkout sync-cfo-fork
+        release=$release_tag perl -i -pe 's/:(.*)$/:$ENV{"release"}/' ../../config/manifests/bases/params.env
+        
+
+    - name: Commit changes in the code back to repository
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Update image version for release
+        file_pattern: '*.env'
+        branch: sync-cfo-fork
+
     - name: Set up Git
       run: |
         git config --global user.name ${{ secrets.githubUserName }}
@@ -33,5 +47,5 @@ jobs:
         PR_BODY="This pull request updates the fork to match the latest changes from the upstream repository."
         gh pr create --base "${{ env.GIT_BRANCH }}" --head sync-cfo-fork --title "$PR_TITLE" --body "$PR_BODY"
       env:
-        GITHUB_TOKEN: ${{ secrets.CODEFLARE_MACHINE_ACCOUNT_TOKEN }}
+        GITHUB_TOKEN: ${{ github.token }}
       shell: bash

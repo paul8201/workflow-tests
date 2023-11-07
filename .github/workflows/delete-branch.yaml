@@ -2,26 +2,12 @@
 
 name: POST PR MERGE
 on:
-  pull_request:
-    types:
-      - closed
   workflow_dispatch:
 
 jobs:
   pr_merged_by_bob_with_sync_title:
-    if: (github.event.pull_request.merged == true && github.event.pull_request.user.login == 'paul8201' && contains(github.event.pull_request.title, 'Sync with Upstream')) || github.event_name == 'workflow_dispatch'
-
     runs-on: ubuntu-latest
-
     steps:
-    - name: Check out the code
-      uses: actions/checkout@v2
-
-    - name: Notify or perform actions
-      run: |
-        # You can put your notification or action steps here
-        echo "PR by Bob with 'sync' title has been merged or workflow manually triggered."
-    
     - name: Delete remote branch
       run: |
-        git push origin --delete sync-cfo-fork
+        echo "Hello"
