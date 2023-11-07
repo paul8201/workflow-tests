@@ -25,9 +25,8 @@ jobs:
     - name: Update image
       run: |
         release_tag=$(gh release view -R github.com/project-codeflare/codeflare-operator --json tagName | jq -r '.tagName')
-        echo "RELEASE_TAG=$release_tag" >> $GITHUB_ENV
         git checkout sync-cfo-fork
-        perl -i -pe 's/:(.*)$/:$release_tag/' ../../config/manifests/bases/params.env
+        release=$release_tag perl -i -pe 's/:(.*)$/:$ENV{"release"}/' ../../config/manifests/bases/params.env
         
 
     - name: Commit changes in the code back to repository
