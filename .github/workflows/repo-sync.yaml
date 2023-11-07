@@ -22,6 +22,21 @@ jobs:
         destination_branch: "sync-cfo-fork"
         github_token: ${{ secrets.CODEFLARE_MACHINE_ACCOUNT_TOKEN }}
 
+    - name: Update image
+      run: |
+        release_tag=$(gh release view -R github.com/project-codeflare/codeflare-operator --json tagName | jq -r '.tagName')
+        echo "RELEASE_TAG=$release_tag" >> $GITHUB_ENV
+        git checkout sync-cfo-fork
+        perl -i -pe 's/:(.*)$/:$release_tag/' ../../config/manifests/bases/params.env
+        
+
+    - name: Commit changes in the code back to repository
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Update image version for release
+        file_pattern: '*.env'
+        branch: sync-cfo-fork
+
     - name: Set up Git
       run: |
         git config --global user.name ${{ secrets.githubUserName }}
