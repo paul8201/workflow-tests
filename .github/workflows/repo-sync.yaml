@@ -28,8 +28,8 @@ jobs:
 
     - name: Update image
       run: |
-        git checkout sync-cfo-fork
         VERSION=${{ github.event.inputs.version }} perl -i -pe 's/:(.*)$/:$ENV{"VERSION"}/' config/manifests/bases/params.env
+        cat config/manifests/bases/params.env
       shell:
         bash
 
